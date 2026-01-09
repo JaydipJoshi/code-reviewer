@@ -20,6 +20,12 @@ function App() {
   }, []);
 
   async function reviewCode() {
+
+    if(!code || !code.trim()) {
+      setReview("Please enter your code to review it ...");
+      return;
+    }
+    
     setLoading(true);
     setReview("");
     try {
