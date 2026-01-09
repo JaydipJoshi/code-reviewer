@@ -4,7 +4,7 @@ dotenv.config();
 
 const genAi = new GoogleGenerativeAI(process.env.GOOGLE_GEMINI_KEY);
 const model = genAi.getGenerativeModel({
-  model: "gemini-2.5-pro",
+  model: "gemini-2.5-flash",
   systemInstruction: `
    Here’s a solid system instruction for your AI code reviewer:
 
