@@ -4,12 +4,10 @@ import cors from "cors";
 
 const app = express();
 
-app.use(cors({
-  origin: process.env.CLIENT_URL,
-  methods: ["GET", "POST"],
-  credentials: true
-}))
+app.use(cors())
 app.use(express.json());
+console.log("Incoming Body : ", req.body);
+
 
 app.get("/", (req, res) => {
   res.send("Backend is running");
