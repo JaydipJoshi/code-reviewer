@@ -46,6 +46,7 @@ function App() {
   }
 
   return (
+    <h1 style={{color:"red"}}>DEBUG VERSION</h1>
     <main>
       <div className="left">
         <div className="code">
