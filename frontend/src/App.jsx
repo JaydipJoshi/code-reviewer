@@ -27,22 +27,20 @@ function App() {
     setReview("");
 
     try {
-      const response = await axios.post(
-        `${import.meta.env.VITE_API_BASE_URL}/ai/get-review`,
-        { code }
-      );
+  const response = await axios.post(
+    `${import.meta.env.VITE_API_BASE_URL}/ai/get-review`,
+    { code }
+  );
 
-      setReview(response.data.review);
+  // TEMP DEBUG
+  alert("FULL RESPONSE:\n" + JSON.stringify(response.data));
 
-    } catch (error) {
-      setReview(
-        error.response?.data?.message ||
-        "Something went wrong while reviewing the code."
-      );
-    } finally {
-      setLoading(false);
-    }
-  }
+  setReview(JSON.stringify(response.data));
+
+} catch (error) {
+  alert("ERROR:\n" + JSON.stringify(error.response?.data));
+  setReview("Error occurred.");
+}
 
   return (
     <main>
