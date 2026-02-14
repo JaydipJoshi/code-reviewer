@@ -1,6 +1,6 @@
 import fetch from "node-fetch";
 
-const HF_TOKEN = process.env.GEMINI_API_KEY;
+const HF_TOKEN = process.env.HF_API_KEY;
 
 async function generateContent(prompt) {
   try {
