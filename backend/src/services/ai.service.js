@@ -1,42 +1,35 @@
-const HF_TOKEN = process.env.HF_API_KEY;
+import OpenAI from "openai";
+
+const openai = new OpenAI({
+  apiKey: process.env.OPENROUTER_API_KEY,
+  baseURL: "https://openrouter.ai/api/v1",
+});
 
 async function generateContent(prompt) {
   try {
-    const response = await fetch(
-      "https://router.huggingface.co/hf-inference/models/Salesforce/codegen-350M-mono",
-      {
-        method: "POST",
-        headers: {
-          Authorization: `Bearer ${HF_TOKEN}`,
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          inputs: `You are an expert code reviewer.
+    const response = await openai.chat.completions.create({
+      model: "mistralai/mistral-7b-instruct",
+      messages: [
+        {
+          role: "system",
+          content: `You are a senior software engineer and expert code reviewer.
 Detect the programming language.
 Review the code.
 List issues clearly.
 Suggest improvements.
+Provide corrected examples when needed.`,
+        },
+        {
+          role: "user",
+          content: prompt,
+        },
+      ],
+    });
 
-Code:
-${prompt}`
-        }),
-      }
-    );
-
-    const data = await response.json();
-
-    if (Array.isArray(data) && data[0]?.generated_text) {
-      return data[0].generated_text;
-    }
-
-    if (data.error) {
-      return `HuggingFace Error: ${data.error}`;
-    }
-
-    return "Model did not return expected output.";
+    return response.choices[0].message.content;
 
   } catch (error) {
-    console.error("HuggingFace Error:", error);
+    console.error("OpenRouter Error:", error);
     throw new Error("AI generation failed");
   }
 }
