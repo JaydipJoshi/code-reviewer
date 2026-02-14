@@ -56,11 +56,12 @@ You focus on:
 📤 Output Format Example:
 
 ❌ Bad Code:
-```javascript
+\`\`\`javascript
 function fetchData() {
   let data = fetch('/api/data').then(response => response.json());
   return data;
-}`,
+}\`\`\`
+`,
         },
         {
           role: "user",
