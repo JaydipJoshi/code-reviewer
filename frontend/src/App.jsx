@@ -77,10 +77,6 @@ function App() {
             Analyzing your code...
           </div>
         )}
-        {!loading && !review && (
-          <div className="loader-text" style={{ opacity: 0.7 }}>
-          </div>
-        )}
         {review && (
           <Markdown rehypePlugins={[rehypeHighlight]}>
             {review}
