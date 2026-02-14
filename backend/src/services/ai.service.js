@@ -1,28 +1,29 @@
-import OpenAI from "openai";
+import { GoogleGenerativeAI } from "@google/generative-ai";
 import dotenv from "dotenv";
 
 dotenv.config();
 
-const openai = new OpenAI({
-  apiKey: process.env.GEMINI_API_KEY, // name doesn't matter, value must be OpenAI key
+const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
+
+const model = genAI.getGenerativeModel({
+  model: "gemini-1.5-flash",
+  systemInstruction: `
+You are a senior code reviewer with 7+ years of experience.
+Review code carefully.
+Explain issues clearly.
+Suggest improvements with examples.
+Keep response structured and professional.
+`
 });
 
 async function generateContent(prompt) {
-  const response = await openai.chat.completions.create({
-    model: "gpt-4o",
-    messages: [
-      {
-        role: "system",
-        content: "You are a senior code reviewer with 7+ years of experience..."
-      },
-      {
-        role: "user",
-        content: prompt
-      }
-    ],
-  });
-
-  return response.choices[0].message.content;
+  try {
+    const result = await model.generateContent(prompt);
+    return result.response.text();
+  } catch (error) {
+    console.error("Gemini Error:", error);
+    throw new Error("AI generation failed");
+  }
 }
 
 export default generateContent;
