@@ -1,27 +1,28 @@
-import { GoogleGenerativeAI } from "@google/generative-ai";
-import dotenv from "dotenv";
+import fetch from "node-fetch";
 
-dotenv.config();
-
-const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
-
-const model = genAI.getGenerativeModel({
-  model: "gemini-2.5-flash-light",
-  systemInstruction: `
-You are a senior code reviewer with 7+ years of experience.
-Review code carefully.
-Explain issues clearly.
-Suggest improvements with examples.
-Keep response structured and professional.
-`
-});
+const HF_TOKEN = process.env.GEMINI_API_KEY;
 
 async function generateContent(prompt) {
   try {
-    const result = await model.generateContent(prompt);
-    return result.response.text();
+    const response = await fetch(
+      "https://api-inference.huggingface.co/models/codegen-350M-mono",
+      {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${HF_TOKEN}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          inputs: prompt,
+        }),
+      }
+    );
+
+    const data = await response.json();
+
+    return data[0]?.generated_text || "No output";
   } catch (error) {
-    console.error("Gemini Error:", error);
+    console.error("HuggingFace Error:", error);
     throw new Error("AI generation failed");
   }
 }
