@@ -32,21 +32,18 @@ function App() {
         { code }
       );
 
-      // DEBUG
-      alert("FULL RESPONSE:\n" + JSON.stringify(response.data));
-
-      setReview(JSON.stringify(response.data));
-
+      setReview(response.data.review);
     } catch (error) {
-      alert("ERROR:\n" + JSON.stringify(error.response?.data));
-      setReview("Error occurred while fetching review.");
+      setReview(
+        error.response?.data?.message ||
+        "Something went wrong while reviewing the code."
+      );
     } finally {
       setLoading(false);
     }
   }
 
   return (
-    <h1 style={{color:"red"}}>DEBUG VERSION</h1>
     <main>
       <div className="left">
         <div className="code">
@@ -75,7 +72,11 @@ function App() {
       </div>
 
       <div className="right">
-        {loading && <div className="loader-text">Analyzing your code...</div>}
+        {loading && (
+          <div className="loader-text">
+            Analyzing your code...
+          </div>
+        )}
         <Markdown rehypePlugins={[rehypeHighlight]}>
           {review}
         </Markdown>
