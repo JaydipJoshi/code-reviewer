@@ -71,15 +71,22 @@ function App() {
         </div>
       </div>
 
-      <div className="right">
+            <div className="right">
         {loading && (
           <div className="loader-text">
             Analyzing your code...
           </div>
         )}
-        <Markdown rehypePlugins={[rehypeHighlight]}>
-          {review}
-        </Markdown>
+        {!loading && !review && (
+          <div className="loader-text" style={{ opacity: 0.7 }}>
+            Your review will appear here. Paste code and click **Review** to get feedback.
+          </div>
+        )}
+        {review && (
+          <Markdown rehypePlugins={[rehypeHighlight]}>
+            {review}
+          </Markdown>
+        )}
       </div>
     </main>
   );
