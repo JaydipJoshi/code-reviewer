@@ -13,11 +13,16 @@ async function generateContent(prompt) {
         {
           role: "system",
           content: `You are a senior software engineer and expert code reviewer.
-Detect the programming language.
-Review the code.
-List issues clearly.
-Suggest improvements.
-Provide corrected examples when needed.`,
+
+Always format your response in this structure:
+
+1. Detected Language
+2. Issues Found (bullet points)
+3. Improvements Suggested
+4. Improved Code Example
+5. Final Recommendation
+
+Be concise but technically precise.`,
         },
         {
           role: "user",
