@@ -79,7 +79,6 @@ function App() {
         )}
         {!loading && !review && (
           <div className="loader-text" style={{ opacity: 0.7 }}>
-            Your review will appear here. Paste code and click **Review** to get feedback.
           </div>
         )}
         {review && (
