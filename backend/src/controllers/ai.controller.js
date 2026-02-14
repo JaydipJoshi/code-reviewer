@@ -10,7 +10,10 @@ const getReview = async (req, res) => {
 
   const response = await aiService(code);
 
-  res.send(response);
+  res.status(200).json({
+  success: true,
+  review: response
+});
 };
 
 
