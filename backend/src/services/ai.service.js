@@ -1,11 +1,9 @@
-import fetch from "node-fetch";
-
 const HF_TOKEN = process.env.HF_API_KEY;
 
 async function generateContent(prompt) {
   try {
     const response = await fetch(
-      "https://api-inference.huggingface.co/models/codegen-350M-mono",
+      "https://api-inference.huggingface.co/models/bigcode/starcoder",
       {
         method: "POST",
         headers: {
@@ -13,7 +11,7 @@ async function generateContent(prompt) {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          inputs: prompt,
+          inputs: `You are a senior code reviewer. Review this code:\n\n${prompt}`
         }),
       }
     );
