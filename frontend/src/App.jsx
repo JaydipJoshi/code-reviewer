@@ -72,7 +72,7 @@ function App() {
       </div>
 
             <div className="right">
-        {review && (
+        {loading && (
           <div className="loader-text">
             Analyzing your code...
           </div>
