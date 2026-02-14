@@ -5,7 +5,7 @@ dotenv.config();
 
 const genAi = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
 const model = genAi.getGenerativeModel({
-  model: "gemini-2.5-flash",
+  model: "GPT-5",
   systemInstruction: `
    Here’s a solid system instruction for your AI code reviewer:
 
